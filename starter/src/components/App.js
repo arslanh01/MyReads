@@ -2,12 +2,14 @@ import "../css/App.css";
 import { useState } from "react";
 import SearchBooks from "./SearchBooks";
 import Shelves from "./Shelves";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-
   return (
-    <div className="app">{showSearchPage ? <SearchBooks /> : <Shelves />}</div>
+    <Routes>
+      <Route exact path="/" element={<Shelves />} />
+      <Route path="/search" element={<SearchBooks />} />
+    </Routes>
   );
 }
 
