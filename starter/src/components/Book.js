@@ -1,4 +1,9 @@
-const Book = ({ book }) => {
+const Book = ({ book, onMove }) => {
+  console.log(book);
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    onMove(book, event.target.value);
+  };
   return (
     <li>
       <div className="book">
@@ -12,7 +17,7 @@ const Book = ({ book }) => {
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select>
+            <select onChange={handleChange}>
               <option value="none" disabled>
                 Move to...
               </option>

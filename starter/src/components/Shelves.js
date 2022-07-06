@@ -2,15 +2,38 @@ import CurrentlyReading from "./CurrentlyReading";
 import WantToRead from "./WantToRead";
 import Read from "./Read";
 import { Link } from "react-router-dom";
+import * as BooksAPI from "../utils/BooksAPI";
+import { useState, useEffect } from "react";
 
-const Shelves = ({ books }) => {
-  let currentlyReadingBooks = books.filter((book) => {
+const Shelves = () => {
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    const getBooks = async () => {
+      const res = await BooksAPI.getAll();
+      console.log(res);
+      setBooks(res);
+    };
+    getBooks();
+  }, []);
+  const handleMove = async (book, shelf) => {
+    console.log("handleMove");
+    BooksAPI.update(book, shelf);
+    setBooks(
+      books.map((bk) => {
+        if (bk.id === book.id) {
+          bk.shelf = shelf;
+        }
+        return bk;
+      })
+    );
+  };
+  const currentlyReadingBooks = books.filter((book) => {
     return book.shelf === "currentlyReading";
   });
-  let wantToReadBooks = books.filter((book) => {
+  const wantToReadBooks = books.filter((book) => {
     return book.shelf === "wantToRead";
   });
-  let readBooks = books.filter((book) => {
+  const readBooks = books.filter((book) => {
     return book.shelf === "read";
   });
   return (
@@ -20,9 +43,12 @@ const Shelves = ({ books }) => {
       </div>
       <div className="list-books-content">
         <div>
-          <CurrentlyReading currentlyReadngBooks={currentlyReadingBooks} />
-          <WantToRead wantToReadBooks={wantToReadBooks} />
-          <Read readBooks={readBooks} />
+          <CurrentlyReading
+            currentlyReadngBooks={currentlyReadingBooks}
+            onMove={handleMove}
+          />
+          <WantToRead wantToReadBooks={wantToReadBooks} onMove={handleMove} />
+          <Read readBooks={readBooks} onMove={handleMove} />
         </div>
       </div>
       <div className="open-search">
