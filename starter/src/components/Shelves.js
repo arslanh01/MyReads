@@ -3,7 +3,16 @@ import WantToRead from "./WantToRead";
 import Read from "./Read";
 import { Link } from "react-router-dom";
 
-const Shelves = () => {
+const Shelves = ({ books }) => {
+  let currentlyReadingBooks = books.filter((book) => {
+    return book.shelf === "currentlyReading";
+  });
+  let wantToReadBooks = books.filter((book) => {
+    return book.shelf === "wantToRead";
+  });
+  let readBooks = books.filter((book) => {
+    return book.shelf === "read";
+  });
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -11,9 +20,9 @@ const Shelves = () => {
       </div>
       <div className="list-books-content">
         <div>
-          <CurrentlyReading />
-          <WantToRead />
-          <Read />
+          <CurrentlyReading currentlyReadngBooks={currentlyReadingBooks} />
+          <WantToRead wantToReadBooks={wantToReadBooks} />
+          <Read readBooks={readBooks} />
         </div>
       </div>
       <div className="open-search">
