@@ -1,6 +1,28 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import * as BooksAPI from "../utils/BooksAPI";
+import Book from "./Book";
 
 const SearchBooks = () => {
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const showingResults = query === "" ? [] : searchResults;
+
+  const searchQuery = async (e) => {
+    if (e.target.value === "") {
+      setQuery("");
+    } else {
+      setQuery(e.target.value);
+      try {
+        const res = await BooksAPI.search(query, 20);
+        if (res) {
+          setSearchResults(res);
+        }
+      } catch (error) {
+        setSearchResults([]);
+      }
+    }
+  };
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -8,11 +30,19 @@ const SearchBooks = () => {
           Close
         </Link>
         <div className="search-books-input-wrapper">
-          <input type="text" placeholder="Search by title, author, or ISBN" />
+          <input
+            type="text"
+            placeholder="Search by title, author, or ISBN"
+            onChange={searchQuery}
+          />
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid"></ol>
+        <ol className="books-grid">
+          {showingResults.map((book) => {
+            return <Book key={book.id} book={book} />;
+          })}
+        </ol>
       </div>
     </div>
   );

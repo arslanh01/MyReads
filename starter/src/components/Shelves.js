@@ -2,31 +2,8 @@ import CurrentlyReading from "./CurrentlyReading";
 import WantToRead from "./WantToRead";
 import Read from "./Read";
 import { Link } from "react-router-dom";
-import * as BooksAPI from "../utils/BooksAPI";
-import { useState, useEffect } from "react";
 
-const Shelves = () => {
-  const [books, setBooks] = useState([]);
-  useEffect(() => {
-    const getBooks = async () => {
-      const res = await BooksAPI.getAll();
-      console.log(res);
-      setBooks(res);
-    };
-    getBooks();
-  }, []);
-  const handleMove = async (book, shelf) => {
-    console.log("handleMove");
-    BooksAPI.update(book, shelf);
-    setBooks(
-      books.map((bk) => {
-        if (bk.id === book.id) {
-          bk.shelf = shelf;
-        }
-        return bk;
-      })
-    );
-  };
+const Shelves = ({ books, onMove }) => {
   const currentlyReadingBooks = books.filter((book) => {
     return book.shelf === "currentlyReading";
   });
@@ -45,10 +22,10 @@ const Shelves = () => {
         <div>
           <CurrentlyReading
             currentlyReadngBooks={currentlyReadingBooks}
-            onMove={handleMove}
+            onMove={onMove}
           />
-          <WantToRead wantToReadBooks={wantToReadBooks} onMove={handleMove} />
-          <Read readBooks={readBooks} onMove={handleMove} />
+          <WantToRead wantToReadBooks={wantToReadBooks} onMove={onMove} />
+          <Read readBooks={readBooks} onMove={onMove} />
         </div>
       </div>
       <div className="open-search">
