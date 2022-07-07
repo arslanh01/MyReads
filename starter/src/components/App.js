@@ -10,12 +10,15 @@ function App() {
   useEffect(() => {
     const getBooks = async () => {
       const res = await BooksAPI.getAll();
-      console.log(res);
       setBooks(res);
     };
     getBooks();
   }, []);
-  const handleMove = async (book, shelf) => {
+  const handleMove = async (book, shelf, oldShelf) => {
+    console.log(oldShelf, book, shelf);
+    if (oldShelf === "none") {
+      setBooks(books.concat(book));
+    }
     BooksAPI.update(book, shelf);
     setBooks(
       books.map((bk) => {

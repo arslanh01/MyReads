@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as BooksAPI from "../utils/BooksAPI";
 import Book from "./Book";
 
-const SearchBooks = () => {
+const SearchBooks = ({ books, onMove }) => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const showingResults = query === "" ? [] : searchResults;
@@ -13,12 +13,18 @@ const SearchBooks = () => {
       setQuery("");
     } else {
       setQuery(e.target.value);
-      try {
-        const res = await BooksAPI.search(query, 20);
-        if (res) {
-          setSearchResults(res);
-        }
-      } catch (error) {
+      const res = await BooksAPI.search(query, 20);
+      if (res && !res.error) {
+        res.forEach((searchResult) => {
+          searchResult.shelf = "none";
+          books.forEach((shelfBook) => {
+            if (searchResult.id === shelfBook.id) {
+              searchResult.shelf = shelfBook.shelf;
+            }
+          });
+        });
+        setSearchResults(res);
+      } else {
         setSearchResults([]);
       }
     }
@@ -40,7 +46,7 @@ const SearchBooks = () => {
       <div className="search-books-results">
         <ol className="books-grid">
           {showingResults.map((book) => {
-            return <Book key={book.id} book={book} />;
+            return <Book key={book.id} book={book} onMove={onMove} />;
           })}
         </ol>
       </div>
