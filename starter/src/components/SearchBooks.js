@@ -18,6 +18,7 @@ const SearchBooks = ({ books, onMove }) => {
       setQuery(e.target.value);
       try {
         const res = await BooksAPI.search(query, 20);
+        console.log(res);
         if (res && !res.error) {
           res.forEach((searchResult) => {
             // setting all default shelves to "none"
