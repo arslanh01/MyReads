@@ -65,7 +65,7 @@ All the books show up on their own shelves in the start on the main page.
 
 ### Move between Shelves
 
-These books can move between the shelves. If a different shelf is selected from the deopdown button next to the book,the book removes from the current shelf and places in the new shelf.
+These books can move between the shelves. If a different shelf is selected from the dropdown button next to the book, the book removes from the current shelf and places in the new shelf.
 
 ### Search
 
