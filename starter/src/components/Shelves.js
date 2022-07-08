@@ -1,4 +1,4 @@
-import Book from "./Book";
+import Shelf from "./Shelf";
 import { Link } from "react-router-dom";
 
 const Shelves = ({ books, onMove }) => {
@@ -24,34 +24,17 @@ const Shelves = ({ books, onMove }) => {
       <div className="list-books-content">
         <div>
           <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {currentlyReadingBooks.map((book) => {
-                  return <Book key={book.id} book={book} onMove={onMove} />;
-                })}
-              </ol>
-            </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {wantToReadBooks.map((book) => {
-                  return <Book key={book.id} book={book} onMove={onMove} />;
-                })}
-              </ol>
-            </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                {readBooks.map((book) => {
-                  return <Book key={book.id} book={book} onMove={onMove} />;
-                })}
-              </ol>
-            </div>
+            <Shelf
+              books={currentlyReadingBooks}
+              name="Currently Reading"
+              onMove={onMove}
+            />
+            <Shelf
+              books={wantToReadBooks}
+              name="Want to Read"
+              onMove={onMove}
+            />
+            <Shelf books={readBooks} name="Read" onMove={onMove} />
           </div>
         </div>
       </div>

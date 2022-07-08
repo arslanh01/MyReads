@@ -17,7 +17,7 @@ const SearchBooks = ({ books, onMove }) => {
     else {
       setQuery(e.target.value);
       try {
-        const res = await BooksAPI.search(query, 20);
+        const res = await BooksAPI.search(e.target.value, 20);
         console.log(res);
         if (res && !res.error) {
           res.forEach((searchResult) => {
