@@ -17,17 +17,20 @@ function App() {
   const handleMove = async (book, shelf, oldShelf) => {
     console.log(oldShelf, book, shelf);
     if (oldShelf === "none") {
+      book.shelf = shelf;
       setBooks(books.concat(book));
+      BooksAPI.update(book, shelf);
+    } else {
+      BooksAPI.update(book, shelf);
+      setBooks(
+        books.map((bk) => {
+          if (bk.id === book.id) {
+            bk.shelf = shelf;
+          }
+          return bk;
+        })
+      );
     }
-    BooksAPI.update(book, shelf);
-    setBooks(
-      books.map((bk) => {
-        if (bk.id === book.id) {
-          bk.shelf = shelf;
-        }
-        return bk;
-      })
-    );
   };
   return (
     <Routes>
