@@ -4,6 +4,7 @@ import Shelves from "./Shelves";
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import * as BooksAPI from "../utils/BooksAPI";
+import NotFound from "./NotFound";
 
 function App() {
   // define books using useState hook
@@ -50,6 +51,7 @@ function App() {
         path="/search"
         element={<SearchBooks books={books} onMove={handleMove} />}
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
