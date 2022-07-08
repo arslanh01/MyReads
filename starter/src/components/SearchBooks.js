@@ -4,6 +4,7 @@ import * as BooksAPI from "../utils/BooksAPI";
 import Book from "./Book";
 
 const SearchBooks = ({ books, onMove }) => {
+  // define variables using useState hook
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const showingResults = query === "" ? [] : searchResults;
@@ -11,13 +12,17 @@ const SearchBooks = ({ books, onMove }) => {
   const searchQuery = async (e) => {
     if (e.target.value === "") {
       setQuery("");
-    } else {
+    }
+    // search if there is a query
+    else {
       setQuery(e.target.value);
       const res = await BooksAPI.search(query, 20);
       if (res && !res.error) {
         res.forEach((searchResult) => {
+          // setting all default shelves to "none"
           searchResult.shelf = "none";
           books.forEach((shelfBook) => {
+            // changing shelves of the books that are already in the collection
             if (searchResult.id === shelfBook.id) {
               searchResult.shelf = shelfBook.shelf;
             }

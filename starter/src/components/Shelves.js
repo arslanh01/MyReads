@@ -4,12 +4,17 @@ import Read from "./Read";
 import { Link } from "react-router-dom";
 
 const Shelves = ({ books, onMove }) => {
+  // separate out currently reading books
   const currentlyReadingBooks = books.filter((book) => {
     return book.shelf === "currentlyReading";
   });
+
+  // separate out want to read books
   const wantToReadBooks = books.filter((book) => {
     return book.shelf === "wantToRead";
   });
+
+  // separate out read books
   const readBooks = books.filter((book) => {
     return book.shelf === "read";
   });

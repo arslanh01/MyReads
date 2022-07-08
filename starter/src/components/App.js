@@ -6,7 +6,10 @@ import { useState, useEffect } from "react";
 import * as BooksAPI from "../utils/BooksAPI";
 
 function App() {
+  // define books using useState hook
   const [books, setBooks] = useState([]);
+
+  // get books using useEffect hook
   useEffect(() => {
     const getBooks = async () => {
       const res = await BooksAPI.getAll();
@@ -14,13 +17,17 @@ function App() {
     };
     getBooks();
   }, []);
+
+  // handle move between shelves
   const handleMove = async (book, shelf, oldShelf) => {
-    console.log(oldShelf, book, shelf);
+    // add a new book to the collection
     if (oldShelf === "none") {
       book.shelf = shelf;
       setBooks(books.concat(book));
       BooksAPI.update(book, shelf);
-    } else {
+    }
+    // move a book which is already in the collecton
+    else {
       BooksAPI.update(book, shelf);
       setBooks(
         books.map((bk) => {

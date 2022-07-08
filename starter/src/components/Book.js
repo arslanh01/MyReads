@@ -1,4 +1,5 @@
 const Book = ({ book, onMove }) => {
+  // handle move when a new shelf is selected
   const handleChange = (event) => {
     onMove(book, event.target.value, book.shelf);
   };
@@ -31,6 +32,7 @@ const Book = ({ book, onMove }) => {
           </div>
         </div>
         {book.title ? <div className="book-title">{book.title}</div> : ""}
+        {/* handling authors if more than one */}
         {book.authors
           ? book.authors.map((author) => {
               return (
