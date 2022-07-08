@@ -16,20 +16,24 @@ const SearchBooks = ({ books, onMove }) => {
     // search if there is a query
     else {
       setQuery(e.target.value);
-      const res = await BooksAPI.search(query, 20);
-      if (res && !res.error) {
-        res.forEach((searchResult) => {
-          // setting all default shelves to "none"
-          searchResult.shelf = "none";
-          books.forEach((shelfBook) => {
-            // changing shelves of the books that are already in the collection
-            if (searchResult.id === shelfBook.id) {
-              searchResult.shelf = shelfBook.shelf;
-            }
+      try {
+        const res = await BooksAPI.search(query, 20);
+        if (res && !res.error) {
+          res.forEach((searchResult) => {
+            // setting all default shelves to "none"
+            searchResult.shelf = "none";
+            books.forEach((shelfBook) => {
+              // changing shelves of the books that are already in the collection
+              if (searchResult.id === shelfBook.id) {
+                searchResult.shelf = shelfBook.shelf;
+              }
+            });
           });
-        });
-        setSearchResults(res);
-      } else {
+          setSearchResults(res);
+        } else {
+          setSearchResults([]);
+        }
+      } catch (err) {
         setSearchResults([]);
       }
     }
