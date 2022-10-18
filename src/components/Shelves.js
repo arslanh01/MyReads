@@ -39,7 +39,7 @@ const Shelves = ({ books, onMove }) => {
         </div>
       </div>
       <div className="open-search">
-        <Link to="/search">Add a book</Link>
+        <Link to="MyReads/search">Add a book</Link>
       </div>
     </div>
   );
