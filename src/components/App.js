@@ -44,11 +44,11 @@ function App() {
     <Routes>
       <Route
         exact
-        path="/"
+        path="MyReads/"
         element={<Shelves books={books} onMove={handleMove} />}
       />
       <Route
-        path="/search"
+        path="MyReads/search"
         element={<SearchBooks books={books} onMove={handleMove} />}
       />
       <Route path="*" element={<NotFound />} />
